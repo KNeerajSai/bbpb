@@ -21,6 +21,13 @@ class Settings(BaseSettings):
     host: str = Field(default="0.0.0.0", description="Server host")
     port: int = Field(default=8000, description="Server port")
     
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Railway compatibility: use Railway's PORT if available
+        railway_port = os.getenv('PORT')
+        if railway_port:
+            self.port = int(railway_port)
+    
     # Database Configuration
     database_url: str = Field(
         default="postgresql://postgres:password@localhost:5432/fermentation_db",
