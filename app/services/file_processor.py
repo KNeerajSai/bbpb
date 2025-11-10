@@ -323,10 +323,8 @@ class FileProcessorService:
                 
                 # Handle different timestamp formats
                 if timestamp_str.replace('.', '').isdigit():  # Decimal format like 0.009, 0.026
-                    # Convert decimal hours to Unix timestamp (assuming start time as 2023-11-08T10:00:00Z)
-                    base_timestamp = 1699444800.0  # 2023-11-08T10:00:00Z in Unix time
-                    hours_offset = float(timestamp_str)
-                    timestamp = base_timestamp + (hours_offset * 3600)  # Convert hours to seconds
+                    # Keep as-is for simple time values from CSV
+                    timestamp = float(timestamp_str)
                 else:
                     # ISO datetime format
                     timestamp_dt = pd.to_datetime(timestamp_str, utc=True)
